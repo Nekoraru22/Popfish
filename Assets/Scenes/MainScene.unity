@@ -1424,6 +1424,10 @@ PrefabInstance:
       propertyPath: ChargeRate
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 2161066368618152146, guid: 3a9072fc43c2bf9499808eadf75fd27e, type: 3}
+      propertyPath: oxygenController
+      value: 
+      objectReference: {fileID: 2099327823}
     - target: {fileID: 2317452719007599856, guid: 3a9072fc43c2bf9499808eadf75fd27e, type: 3}
       propertyPath: m_Name
       value: MutantFish
@@ -2573,6 +2577,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5505406641639501237, guid: 6fbcf57afb3646d48a65511195feb5e0, type: 3}
+      propertyPath: slider
+      value: 
+      objectReference: {fileID: 2099327826}
     - target: {fileID: 6909553054512956898, guid: 6fbcf57afb3646d48a65511195feb5e0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -5739,6 +5747,22 @@ Transform:
   - {fileID: 1477502630}
   m_Father: {fileID: 1444044836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2099327823 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7894932049745183173, guid: 6fbcf57afb3646d48a65511195feb5e0, type: 3}
+  m_PrefabInstance: {fileID: 938650575}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2099327826 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2552958365674721318, guid: 6fbcf57afb3646d48a65511195feb5e0, type: 3}
+  m_PrefabInstance: {fileID: 938650575}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099327823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2102260582
 PrefabInstance:
   m_ObjectHideFlags: 0
