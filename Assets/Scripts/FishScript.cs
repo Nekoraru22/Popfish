@@ -22,7 +22,6 @@ public class FishScript : MonoBehaviour
     public KeyCode KeyBomba = KeyCode.S;
     public KeyCode KeyGancho = KeyCode.LeftShift;
 
-
     private float stunTimer = 0.0f;
     public bool isStuned = false;
 
@@ -81,38 +80,37 @@ public class FishScript : MonoBehaviour
         Vector3 newPosition = transform.position;
         bool needsWrapping = false;
 
-
-        if (derecha && !izquierda)
-        {
-            movimiento.x = 1.0f;
-        }
-        if (izquierda && !derecha)
-        {
-            movimiento.x = -1.0f;
-        }
-        if (derecha && izquierda)
-        {
-            movimiento.x = 0.0f;
-        }
-
-        float hHeight = Camera.main.orthographicSize;
-        float hWidth = hHeight * Camera.main.aspect;
-        if (this.transform.position.x < Camera.main.transform.position.x - hWidth - 10)
-        {
-            this.transform.position = Camera.main.transform.position + new Vector3(0, hWidth, 0);
-        }
-
-        // Charge and jump logic
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (isPoisoned)
-            Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge/2);
-            else
-            Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
-
-        }
         if (isOnPlatform)
         {
+            if (derecha && !izquierda)
+            {
+                movimiento.x = 1.0f;
+            }
+            if (izquierda && !derecha)
+            {
+                movimiento.x = -1.0f;
+            }
+            if (derecha && izquierda)
+            {
+                movimiento.x = 0.0f;
+            }
+
+            float hHeight = Camera.main.orthographicSize;
+            float hWidth = hHeight * Camera.main.aspect;
+            if (this.transform.position.x < Camera.main.transform.position.x - hWidth - 10)
+            {
+                this.transform.position = Camera.main.transform.position + new Vector3(0, hWidth, 0);
+            }
+
+            // Charge and jump logic
+            if (Input.GetKey(KeyCode.Space))
+            {
+                if (isPoisoned)
+                Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge/2);
+                else
+                Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
+
+            }
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 body.AddForce(movimiento * Charge, ForceMode2D.Impulse);
@@ -139,18 +137,6 @@ public class FishScript : MonoBehaviour
         else if (viewportPosition.x > 1 + (objectWidth / Camera.main.orthographicSize))
         {
             newPosition.x = Camera.main.ViewportToWorldPoint(new Vector3(0, viewportPosition.y, viewportPosition.z)).x;
-            needsWrapping = true;
-        }
-
-        // Check vertical bounds
-        if (viewportPosition.y < 0 - (objectHeight / Camera.main.orthographicSize))
-        {
-            newPosition.y = Camera.main.ViewportToWorldPoint(new Vector3(viewportPosition.x, 1, viewportPosition.z)).y;
-            needsWrapping = true;
-        }
-        else if (viewportPosition.y > 1 + (objectHeight / Camera.main.orthographicSize))
-        {
-            newPosition.y = Camera.main.ViewportToWorldPoint(new Vector3(viewportPosition.x, 0, viewportPosition.z)).y;
             needsWrapping = true;
         }
 
