@@ -9,6 +9,6 @@ PhysicsMaterial2D:
   m_Name: FisicasFish
   serializedVersion: 2
   friction: 0.2
-  bounciness: 0.5
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
+  bounciness: 0.2
+  m_FrictionCombine: 3
+  m_BounceCombine: 3
