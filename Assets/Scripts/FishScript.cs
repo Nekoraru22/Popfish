@@ -9,6 +9,20 @@ public class FishScript : MonoBehaviour
     public float MaxCharge = 20.0f;
     private float Charge = 0;
 
+    //Controles por default
+    public KeyCode keyIzquierda = KeyCode.A;
+    public KeyCode KeyDerecha = KeyCode.D;
+    public KeyCode KeyPlanear = KeyCode.W;
+    public KeyCode KeyCheckPoint = KeyCode.R;
+    public KeyCode KeyBomba = KeyCode.S;
+    public KeyCode KeyGancho = KeyCode.LeftShift;
+
+
+    public int CurrentBubbles = 0;
+    public int MaxBubbles = 0;
+
+    private Vector2 movimiento = Vector2.zero;
+
     [Header("Leg Sprites")]
     public SpriteRenderer leftLeg;
     public SpriteRenderer rightLeg;
@@ -21,8 +35,8 @@ public class FishScript : MonoBehaviour
     public float maxRotationAngle = 15f;
 
     private float animationTimer = 0f;
-    private Vector2 movimiento = Vector2.zero;
     private bool isMovingHorizontally = false;
+
 
     void Start()
     {
@@ -31,16 +45,25 @@ public class FishScript : MonoBehaviour
 
     void Update()
     {
-        movimiento.Set(0, 1.7f);
+        //Tengo que arreglar la relacion entre altura y anchura para que salte mas que vaya de lados
+        //pero que deje hacer la animaci�n de lado a lado
+        movimiento.Set(movimiento.x, 1.7f);
+        bool izquierda = Input.GetKey(keyIzquierda);
+        bool derecha = Input.GetKey(KeyDerecha);
+
         isMovingHorizontally = body.linearVelocity.magnitude > 0.1f;
 
-        if (Input.GetKey(KeyCode.A))
+        if (derecha && !izquierda)
         {
-            movimiento.x -= 0.5f;
+            movimiento.x = 1.0f;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (izquierda && !derecha)
         {
-            movimiento.x += 0.5f;
+            movimiento.x = -1.0f;
+        }
+        if (derecha && izquierda)
+        {
+            movimiento.x = 0.0f;
         }
 
         // Charge and jump logic
@@ -64,6 +87,7 @@ public class FishScript : MonoBehaviour
         {
             ResetLegs();
         }
+
     }
 
     void UpdateLegAnimation()
