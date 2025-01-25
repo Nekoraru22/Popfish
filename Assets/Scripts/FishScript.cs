@@ -195,14 +195,14 @@ public class FishScript : MonoBehaviour
                 body.AddForce(movimiento * Charge, ForceMode2D.Impulse);
                 currentSaltos = 1;
                 Charge = 0f;
-                JumpEffect()
+                JumpEffect();
             }
         }
         else if (currentSaltos == 1 && currentSaltos < numMaxSaltos && Input.GetKeyDown(KeySalto))
         {
             body.AddForce(movimiento * MaxCharge / 2, ForceMode2D.Impulse);
             currentSaltos = 0;
-            JumpEffect()
+            JumpEffect();
 
         }
         else if (slowFalling)
