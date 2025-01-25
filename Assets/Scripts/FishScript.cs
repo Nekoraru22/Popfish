@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class FishScript : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class FishScript : MonoBehaviour
 
     private bool isPoisoned = false;
     private float poisonedTimer = 0.0f;
+
+    public float maxTimeWater = 20.0f;
+    public bool underWater = true;
+    private float water = 0.0f;
 
     private bool isOnPlatform = true;
 
@@ -57,6 +62,14 @@ public class FishScript : MonoBehaviour
             if (poisonedTimer < 0.0f)
             {
                 isPoisoned = false;
+            }
+        }
+        if (!underWater)
+        {
+            water -= Time.deltaTime;
+            if (water < 0.0f)
+            {
+                SetInverseControls();
             }
         }
         //Tengo que arreglar la relacion entre altura y anchura para que salte mas que vaya de lados
@@ -178,6 +191,12 @@ public class FishScript : MonoBehaviour
     {
         isPoisoned = true;
         poisonedTimer = 5f;
+    }
+
+    public void SetWater()
+    {
+        underWater = false;
+        water = maxTimeWater;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

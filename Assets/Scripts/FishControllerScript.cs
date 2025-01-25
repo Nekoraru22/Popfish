@@ -37,12 +37,19 @@ public class FishControllerScript : MonoBehaviour
 
     public void LoseBubbles(int bubbles) {
         // Restar burbujas
-        bubbleScript.AddBubbles(bubbles);
+        bubbleScript.RemoveBubbles(bubbles);
     }
 
     public void RefillBubbles(int bubbles) {
         // Sumar burbujas
-        bubbleScript.RemoveBubbles(bubbles);
+        fishScript.underWater = true;
+        fishScript.SetNormalControls();
+        bubbleScript.AddBubbles(bubbles);
+    }
+
+    public void EndRefill()
+    {
+        fishScript.SetWater();
     }
 
     public void DisableColliders() {
@@ -54,4 +61,10 @@ public class FishControllerScript : MonoBehaviour
         // Activar colisiones
         fish.GetComponent<Collider2D>().isTrigger = false;
     }
+
+    public void EnableSlowFalling()
+    {
+        // Activar caida lenta / planeo
+    }
+
 }
