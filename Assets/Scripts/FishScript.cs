@@ -1,9 +1,12 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class FishScript : MonoBehaviour
 {
+    public GameObject prefabBomba;
+
     public Rigidbody2D body;
     public float ChargeRate = 15.0f;
     public float MaxCharge = 15.0f;
@@ -171,7 +174,12 @@ public class FishScript : MonoBehaviour
             }
         }
         
-        
+        if (Input.GetKeyDown(KeyBomba))
+        {
+            Vector3 posicion = body.transform.position;
+            Quaternion rotation = Quaternion.identity;
+            GameObject instanceWithTransform = Instantiate(prefabBomba, posicion, rotation);
+        }
         
         // Legs animation
         if (isMovingHorizontally)

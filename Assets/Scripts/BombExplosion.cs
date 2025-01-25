@@ -11,20 +11,19 @@ public class BombExplosion : MonoBehaviour
     private GameObject FishControllerObj;
 
     private FishScript fishscript;
-    private FishControllerScript fishController;
 
     void Start()
     {
         timer = 2;
         elapsedTime = 0f;
         // BUSCAR FISHCONTROLLER FUERA DEL PREFAB
-
-
-        GameObject FishScriptObj = GameObject.Find("FishScript");
-        GameObject FishControllerObj = GameObject.FindGameObjectWithTag("Fish");
         
+        FishScriptObj = GameObject.Find("MutantFish");
+        Debug.Log(FishControllerObj);
         fishscript = FishScriptObj.GetComponent<FishScript>();
-        fishController = FishControllerObj.GetComponent<FishControllerScript>();
+        Debug.Log(fishscript);
+
+        FishControllerObj = GameObject.Find("FishController");
     }
 
     private void FixedUpdate()
@@ -64,6 +63,6 @@ public class BombExplosion : MonoBehaviour
         float forceMultiplier = Mathf.Clamp(1 / distance, 0.1f, 1f);
 
         fishscript.body.AddForce(direction * ExplosionPower * forceMultiplier, ForceMode2D.Impulse);
-        Destroy(gameObject); // Destruye el objeto de la bomba
+        Destroy(transform.parent.gameObject);// Destruye el objeto de la bomba
     }
 }
