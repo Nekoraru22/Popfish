@@ -109,6 +109,7 @@ public class FishScript : MonoBehaviour
         if (isRotating)
         {
             rotationProgress += Time.deltaTime * 3f; // Adjust speed by changing 3f
+            
             if (rotationProgress >= 1f)
             {
                 rotationProgress = 1f;
@@ -120,6 +121,11 @@ public class FishScript : MonoBehaviour
                 // Smooth easing curve
                 float t = EaseInOutCubic(rotationProgress);
                 currentYRotation = Mathf.Lerp(startRotation, targetRotation, t);
+            }
+
+            if (Mathf.Abs(currentYRotation) != 90 && Mathf.Abs(currentYRotation) != 270)
+            {
+                transform.rotation = Quaternion.Euler(0, currentYRotation, 0);
             }
         }
 
@@ -146,8 +152,6 @@ public class FishScript : MonoBehaviour
                 movimiento.x = 0.0f;
             }
             else movimiento.x = 0.0f;
-
-            transform.rotation = Quaternion.Euler(0, currentYRotation, 0);
 
             float hHeight = Camera.main.orthographicSize;
             float hWidth = hHeight * Camera.main.aspect;
