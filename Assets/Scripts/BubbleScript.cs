@@ -16,7 +16,7 @@ public class BubbleScript : MonoBehaviour
     public void AddBubbles(int bubbles) {
         // Add all bubbles
         if (bubbles == -1) {
-            for (int i = 0; i <= bubblesCount; i++) {
+            for (int i = 0; i < bubblesCount; i++) {
                 this.bubbles[i].enabled = true;
             }
         }
