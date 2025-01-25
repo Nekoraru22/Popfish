@@ -5,7 +5,15 @@ using UnityEngine.UIElements;
 
 public class FishScript : MonoBehaviour
 {
-    public GameObject prefabBomba;
+    public GameObject bubbleControler;
+    private BubbleScript bubbleScript;
+
+    private bool slowFalling = true;
+
+    private int numMaxSaltos = 2;
+    private int currentSaltos = 0;
+
+    private GameObject prefabBomba;
 
     public Rigidbody2D body;
     public float ChargeRate = 15.0f;
@@ -32,6 +40,7 @@ public class FishScript : MonoBehaviour
     public KeyCode KeyCheckPoint = KeyCode.R;
     public KeyCode KeyBomba = KeyCode.S;
     public KeyCode KeyGancho = KeyCode.LeftShift;
+    public KeyCode KeySalto = KeyCode.Space;
     public bool isReversed = false;
 
     private float stunTimer = 0.0f;
@@ -64,9 +73,12 @@ public class FishScript : MonoBehaviour
 
     void Start()
     {
+        prefabBomba = GameObject.Find("BombPowerUp");
         oxygenScript = oxygenController.GetComponent<OxygenScript>();
         water = maxTimeWater;
         oxygenScript.SetMaxOxygen(maxTimeWater);
+        body.gravityScale = 5.0f;
+        bubbleScript = bubbleControler.GetComponent<BubbleScript>();
     }
 
     private void FixedUpdate() {
@@ -84,13 +96,6 @@ public class FishScript : MonoBehaviour
                 SetInverseControls();
             }
         }
-    }
-
-    void Update()
-    {
-        //Tengo que arreglar la relacion entre altura y anchura para que salte mas que vaya de lados
-        //pero que deje hacer la animaci�n de lado a lado
-        isMovingHorizontally = body.linearVelocity.magnitude > 0.1f;
         if (isStuned)
         {
             stunTimer -= Time.deltaTime;
@@ -98,6 +103,14 @@ public class FishScript : MonoBehaviour
             {
                 isStuned = false;
             }
+        }
+    }
+
+    void Update()
+    {
+        isMovingHorizontally = body.linearVelocity.magnitude > 0.1f;
+        if (isStuned)
+        {
             return;
         }
         movimiento.Set(movimiento.x, 1.7f);
@@ -110,6 +123,7 @@ public class FishScript : MonoBehaviour
 
         if (body.IsTouching(ContactFilter))
         {
+            
             if (derecha && !izquierda)
             {
                 movimiento.x = 1.0f;
@@ -159,7 +173,7 @@ public class FishScript : MonoBehaviour
             }
 
             // Charge and jump logic
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeySalto))
             {
                 if (isPoisoned)
                 Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge/2);
@@ -167,10 +181,29 @@ public class FishScript : MonoBehaviour
                 Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
 
             }
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeySalto))
             {
                 body.AddForce(movimiento * Charge, ForceMode2D.Impulse);
+                currentSaltos = 1;
                 Charge = 0f;
+                body.gravityScale = 5.0f;
+            }
+        }
+        else if (currentSaltos == 1 && currentSaltos < numMaxSaltos && Input.GetKeyDown(KeySalto))
+        {
+            body.AddForce(movimiento * MaxCharge / 2, ForceMode2D.Impulse);
+            currentSaltos = 0;
+
+        }
+        else if (slowFalling)
+        {
+            if (Input.GetKey(KeyPlanear))
+            {
+                body.linearVelocityY = -3f;
+                if (Input.GetKeyDown(KeyDerecha))
+                    body.linearVelocityX = 5.0f;
+                if (Input.GetKeyDown(keyIzquierda))
+                    body.linearVelocityX = -5.0f;
             }
         }
         
@@ -299,6 +332,24 @@ public class FishScript : MonoBehaviour
     {
         underWater = false;
         water = maxTimeWater;
+    }
+
+    public void setNumSaltos(int newnumSaltos)
+    {
+        numMaxSaltos = newnumSaltos;
+    }
+    public void RefillBubbles(int bubbles)
+    {
+        // Sumar burbujas
+        underWater = true;
+        SetNormalControls();
+        bubbleScript.AddBubbles(bubbles);
+    }
+
+    public void LoseBubbles(int bubbles)
+    {
+        // Restar burbujas
+        bubbleScript.RemoveBubbles(bubbles);
     }
 
 }
