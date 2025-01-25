@@ -33,12 +33,12 @@ public class FishControllerScript : MonoBehaviour
     }
 
     public void DisableColliders() {
-        // Desactivar colisiones
-        fish.GetComponent<Collider2D>().enabled = false;
+        // Desactivar colisiones pero no triggers
+        fish.GetComponent<Collider2D>().isTrigger = true;
     }
 
     public void EnableColliders() {
         // Activar colisiones
-        fish.GetComponent<Collider2D>().enabled = true;
+        fish.GetComponent<Collider2D>().isTrigger = false;
     }
 }
