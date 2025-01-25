@@ -5,9 +5,14 @@ public class FishScript : MonoBehaviour
 {
     public Rigidbody2D body;
     public Collider2D Collider;
-    public float ChargeRate = 5.0f;
-    public float MaxCharge = 20.0f;
+    public float ChargeRate = 15.0f;
+    public float MaxCharge = 15.0f;
     private float Charge = 0;
+
+    private bool isPoisoned = false;
+    private float poisonedTimer = 0.0f;
+
+    private bool isOnPlatform = true;
 
     public Camera camera;
 
@@ -20,8 +25,8 @@ public class FishScript : MonoBehaviour
     public KeyCode KeyGancho = KeyCode.LeftShift;
 
 
-    public int CurrentBubbles = 0;
-    public int MaxBubbles = 0;
+    private float stunTimer = 0.0f;
+    public bool isStuned = false;
 
     private Vector2 movimiento = Vector2.zero;
 
@@ -44,22 +49,32 @@ public class FishScript : MonoBehaviour
 
     void Start()
     {
-        if (GetComponent<Renderer>() != null)
-        {
-            objectWidth = GetComponent<Renderer>().bounds.size.x / 2;
-            objectHeight = GetComponent<Renderer>().bounds.size.y / 2;
-        }
-        else
-        {
-            objectWidth = 0.5f; // Default size if no renderer
-            objectHeight = 0.5f;
-        }
+
     }
 
+    //Me falta arreglar lo de salta en la direccion última que se dijo
     void Update()
     {
+        if (isPoisoned)
+        {
+            poisonedTimer -= Time.deltaTime;
+            if (poisonedTimer < 0.0f)
+            {
+                isPoisoned = false;
+            }
+        }
         //Tengo que arreglar la relacion entre altura y anchura para que salte mas que vaya de lados
         //pero que deje hacer la animaci�n de lado a lado
+        isMovingHorizontally = body.linearVelocity.magnitude > 0.1f;
+        if (isStuned)
+        {
+            stunTimer -= Time.deltaTime;
+            if (stunTimer < 0.0f)
+            {
+                isStuned = false;
+            }
+            return;
+        }
         movimiento.Set(movimiento.x, 1.7f);
         bool izquierda = Input.GetKey(keyIzquierda);
         bool derecha = Input.GetKey(KeyDerecha);
@@ -68,7 +83,10 @@ public class FishScript : MonoBehaviour
         Vector3 newPosition = transform.position;
         bool needsWrapping = false;
 
-        isMovingHorizontally = body.linearVelocity.magnitude > 0.1f;
+        Vector3 viewportPosition = camera.WorldToViewportPoint(transform.position);
+        Vector3 newPosition = transform.position;
+        bool needsWrapping = false;
+
 
         if (derecha && !izquierda)
         {
@@ -93,13 +111,19 @@ public class FishScript : MonoBehaviour
         // Charge and jump logic
         if (Input.GetKey(KeyCode.Space))
         {
+            if (isPoisoned)
+            Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge/2);
+            else
             Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
-        }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        }
+        if (isOnPlatform)
         {
-            body.AddForce(movimiento * Charge, ForceMode2D.Impulse);
-            Charge = 0f;
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                body.AddForce(movimiento * Charge, ForceMode2D.Impulse);
+                Charge = 0f;
+            }
         }
 
         // Legs animation
@@ -179,8 +203,49 @@ public class FishScript : MonoBehaviour
         animationTimer = 0f;
     }
 
-    void enableCollision()
+    public void SetInverseControls()
     {
-        Collider.enabled = true;
+        KeyCode auxiliar = keyIzquierda;
+        keyIzquierda = KeyDerecha;
+        KeyDerecha = auxiliar;
     }
+
+    public void SetNormalControls()
+    {
+        KeyCode auxiliar = keyIzquierda;
+        keyIzquierda = KeyDerecha;
+        KeyDerecha = auxiliar;
+    }
+    public void setStunned()
+    {
+        isStuned = true;
+        stunTimer = 2.0f;
+    }
+
+    public void setPosion()
+    {
+        isPoisoned = true;
+        poisonedTimer = 5f;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            // Comprueba si el jugador está por encima de la plataforma
+            if (transform.position.y > collision.transform.position.y)
+            {
+                isOnPlatform = true;
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            isOnPlatform = false;
+        }
+    }
+
 }
