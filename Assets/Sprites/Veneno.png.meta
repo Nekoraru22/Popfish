@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Veneno_0: 7958147730908029603
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

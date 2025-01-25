@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PuntaGancho_0: -5128573422277539581
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
