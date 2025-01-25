@@ -83,10 +83,6 @@ public class FishScript : MonoBehaviour
         Vector3 newPosition = transform.position;
         bool needsWrapping = false;
 
-        Vector3 viewportPosition = camera.WorldToViewportPoint(transform.position);
-        Vector3 newPosition = transform.position;
-        bool needsWrapping = false;
-
 
         if (derecha && !izquierda)
         {
