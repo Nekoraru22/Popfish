@@ -9,6 +9,8 @@ public class FishScript : MonoBehaviour
     public float MaxCharge = 20.0f;
     private float Charge = 0;
 
+    public Camera camera;
+
     //Controles por default
     public KeyCode keyIzquierda = KeyCode.A;
     public KeyCode KeyDerecha = KeyCode.D;
@@ -37,10 +39,21 @@ public class FishScript : MonoBehaviour
     private float animationTimer = 0f;
     private bool isMovingHorizontally = false;
 
+    private float objectWidth;
+    private float objectHeight;
 
     void Start()
     {
-
+        if (GetComponent<Renderer>() != null)
+        {
+            objectWidth = GetComponent<Renderer>().bounds.size.x / 2;
+            objectHeight = GetComponent<Renderer>().bounds.size.y / 2;
+        }
+        else
+        {
+            objectWidth = 0.5f; // Default size if no renderer
+            objectHeight = 0.5f;
+        }
     }
 
     void Update()
@@ -50,6 +63,10 @@ public class FishScript : MonoBehaviour
         movimiento.Set(movimiento.x, 1.7f);
         bool izquierda = Input.GetKey(keyIzquierda);
         bool derecha = Input.GetKey(KeyDerecha);
+
+        Vector3 viewportPosition = camera.WorldToViewportPoint(transform.position);
+        Vector3 newPosition = transform.position;
+        bool needsWrapping = false;
 
         isMovingHorizontally = body.linearVelocity.magnitude > 0.1f;
 
@@ -64,6 +81,13 @@ public class FishScript : MonoBehaviour
         if (derecha && izquierda)
         {
             movimiento.x = 0.0f;
+        }
+
+        float hHeight = camera.orthographicSize;
+        float hWidth = hHeight * camera.aspect;
+        if (this.transform.position.x < camera.transform.position.x - hWidth - 10)
+        {
+            this.transform.position = camera.transform.position + new Vector3(0, hWidth, 0);
         }
 
         // Charge and jump logic
@@ -88,6 +112,35 @@ public class FishScript : MonoBehaviour
             ResetLegs();
         }
 
+        // Check horizontal bounds
+        if (viewportPosition.x < 0 - (objectWidth / camera.orthographicSize))
+        {
+            newPosition.x = camera.ViewportToWorldPoint(new Vector3(1, viewportPosition.y, viewportPosition.z)).x;
+            needsWrapping = true;
+        }
+        else if (viewportPosition.x > 1 + (objectWidth / camera.orthographicSize))
+        {
+            newPosition.x = camera.ViewportToWorldPoint(new Vector3(0, viewportPosition.y, viewportPosition.z)).x;
+            needsWrapping = true;
+        }
+
+        // Check vertical bounds
+        if (viewportPosition.y < 0 - (objectHeight / camera.orthographicSize))
+        {
+            newPosition.y = camera.ViewportToWorldPoint(new Vector3(viewportPosition.x, 1, viewportPosition.z)).y;
+            needsWrapping = true;
+        }
+        else if (viewportPosition.y > 1 + (objectHeight / camera.orthographicSize))
+        {
+            newPosition.y = camera.ViewportToWorldPoint(new Vector3(viewportPosition.x, 0, viewportPosition.z)).y;
+            needsWrapping = true;
+        }
+
+        // Update position if wrapping is needed
+        if (needsWrapping)
+        {
+            transform.position = newPosition;
+        }
     }
 
     void UpdateLegAnimation()
