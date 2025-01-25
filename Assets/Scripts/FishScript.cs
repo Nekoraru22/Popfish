@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -11,7 +12,10 @@ public class FishScript : MonoBehaviour
     public float ChargeRate = 15.0f;
     public float MaxCharge = 15.0f;
     private float Charge = 0;
-
+    
+    public AudioSource[] jumps;
+    public AudioSource splat;
+    
     private bool isPoisoned = false;
     private float poisonedTimer = 0.0f;
 
@@ -62,6 +66,7 @@ public class FishScript : MonoBehaviour
     private float startRotation;
     private float targetRotation;
 
+    private bool splatPlayed = false;
     void Start()
     {
         oxygenScript = oxygenController.GetComponent<OxygenScript>();
@@ -107,9 +112,16 @@ public class FishScript : MonoBehaviour
         Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 newPosition = transform.position;
         bool needsWrapping = false;
+        
 
         if (body.IsTouching(ContactFilter))
         {
+            if (!splatPlayed)
+            {
+                splat.Play();
+                splatPlayed = true;
+            }
+            
             if (derecha && !izquierda)
             {
                 movimiento.x = 1.0f;
@@ -165,13 +177,35 @@ public class FishScript : MonoBehaviour
                 Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge/2);
                 else
                 Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
-
+                
             }
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 body.AddForce(movimiento * Charge, ForceMode2D.Impulse);
                 Charge = 0f;
+                
+                // Make it play a jump sound effect here
+                // Play random jump sound
+                if (jumps != null && jumps.Length > 0)
+                {
+                    // Get random index from jumps array
+                    int randomIndex = Random.Range(0, jumps.Length);
+        
+                    // Make sure the selected AudioSource exists
+                    if (jumps[randomIndex] != null)
+                    {
+                        // Stop the current sound if it's playing (optional)
+                        jumps[randomIndex].Stop();
+            
+                        // Play the random jump sound
+                        jumps[randomIndex].Play();
+                    }
+                }
             }
+        }
+        else
+        {
+            splatPlayed = false;
         }
         
         if (Input.GetKeyDown(KeyBomba))
