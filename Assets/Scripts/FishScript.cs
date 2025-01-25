@@ -9,6 +9,8 @@ public class FishScript : MonoBehaviour
     public float ChargeRate = 5.0f;
     public float MaxCharge = 20.0f;
     private float Charge = 0;
+    public KeyCode keyIzquierda = KeyCode.A;
+    public KeyCode KeyDerecha = KeyCode.D;
 
     private Vector2 movimiento = Vector2.zero;
 
@@ -21,14 +23,24 @@ public class FishScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movimiento.Set(0, 1.7f);
-        if ( Input.GetKey(KeyCode.A))
+        //Tengo que arreglar la relacion entre altura y anchura para que salte mas que vaya de lados
+        //pero que deje hacer la animación de lado a lado
+        Debug.Log(movimiento.x);
+        movimiento.Set(movimiento.x, 1.7f);
+        bool izquierda = Input.GetKey(keyIzquierda);
+        bool derecha = Input.GetKey(KeyDerecha);
+
+        if (derecha && !izquierda)
         {
-            movimiento.x -= 0.5f;
+            movimiento.x = 1.0f;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (izquierda && !derecha)
         {
-            movimiento.x += 0.5f;
+            movimiento.x = -1.0f;
+        }
+        if (derecha && izquierda)
+        {
+            movimiento.x = 0.0f;
         }
         if (Input.GetKey(KeyCode.Space))
         {
