@@ -13,19 +13,22 @@ public class FishScript : MonoBehaviour
     private bool isPoisoned = false;
     private float poisonedTimer = 0.0f;
 
-    public float maxTimeWater = 20.0f;
-    public bool underWater = true;
+    public int maxTimeWater = 20;
+    public bool underWater = false;
     private float water = 0.0f;
+    public GameObject oxygenController;
+    private OxygenScript oxygenScript;
 
     private bool isOnPlatform = true;
 
-    //Controles por default
+    // Controles por default
     public KeyCode keyIzquierda = KeyCode.A;
     public KeyCode KeyDerecha = KeyCode.D;
     public KeyCode KeyPlanear = KeyCode.W;
     public KeyCode KeyCheckPoint = KeyCode.R;
     public KeyCode KeyBomba = KeyCode.S;
     public KeyCode KeyGancho = KeyCode.LeftShift;
+    public bool isReversed = false;
 
     private float stunTimer = 0.0f;
     public bool isStuned = false;
@@ -51,26 +54,30 @@ public class FishScript : MonoBehaviour
 
     void Start()
     {
-
+        oxygenScript = oxygenController.GetComponent<OxygenScript>();
+        water = maxTimeWater;
+        oxygenScript.SetMaxOxygen(maxTimeWater);
     }
-    void Update()
-    {
-        if (isPoisoned)
-        {
+
+    private void FixedUpdate() {
+        if (isPoisoned) {
             poisonedTimer -= Time.deltaTime;
-            if (poisonedTimer < 0.0f)
-            {
+            if (poisonedTimer < 0.0f) {
                 isPoisoned = false;
             }
         }
-        if (!underWater)
-        {
-            water -= Time.deltaTime;
-            if (water < 0.0f)
-            {
+        underWater = false;
+        if (!underWater) {
+            water = Mathf.Max(water - Time.deltaTime, 0.0f);
+            oxygenScript.SetOxygen(water);
+            if (water <= 0.0f && !isReversed) {
                 SetInverseControls();
             }
         }
+    }
+
+    void Update()
+    {
         //Tengo que arreglar la relacion entre altura y anchura para que salte mas que vaya de lados
         //pero que deje hacer la animaci�n de lado a lado
         isMovingHorizontally = body.linearVelocity.magnitude > 0.1f;
@@ -199,6 +206,7 @@ public class FishScript : MonoBehaviour
         KeyCode auxiliar = keyIzquierda;
         keyIzquierda = KeyDerecha;
         KeyDerecha = auxiliar;
+        isReversed = true;
     }
 
     public void SetNormalControls()
@@ -206,6 +214,7 @@ public class FishScript : MonoBehaviour
         KeyCode auxiliar = keyIzquierda;
         keyIzquierda = KeyDerecha;
         KeyDerecha = auxiliar;
+        isReversed = false;
     }
     public void setStunned()
     {
