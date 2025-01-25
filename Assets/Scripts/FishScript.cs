@@ -53,8 +53,6 @@ public class FishScript : MonoBehaviour
     {
 
     }
-
-    //Me falta arreglar lo de salta en la direccion última que se dijo
     void Update()
     {
         if (isPoisoned)
@@ -99,15 +97,15 @@ public class FishScript : MonoBehaviour
             {
                 movimiento.x = 1.0f;
             }
-            if (izquierda && !derecha)
+            else if (izquierda && !derecha)
             {
                 movimiento.x = -1.0f;
             }
-            if (derecha && izquierda)
+            else if (derecha && izquierda)
             {
                 movimiento.x = 0.0f;
             }
-
+            else movimiento.x = 0.0f;
             float hHeight = Camera.main.orthographicSize;
             float hWidth = hHeight * Camera.main.aspect;
             if (this.transform.position.x < Camera.main.transform.position.x - hWidth - 10)
