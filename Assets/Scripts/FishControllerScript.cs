@@ -1,9 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FishControllerScript : MonoBehaviour
 {
     public GameObject fish;
-    
+    //fish = GameObject.Find("fish").GetComponent<FishScript>();
+
     public void SetStun() {
         // Rebotar e inmovilizar al pez durante 2 segundos
     }
@@ -22,6 +24,7 @@ public class FishControllerScript : MonoBehaviour
 
     public void LoseBubbles(int bubbles) {
         // Restar burbujas
+
     }
 
     public void RefillBubbles(int bubbles) {
@@ -31,9 +34,11 @@ public class FishControllerScript : MonoBehaviour
 
     public void DisableColliders() {
         // Desactivar colisiones
+        fish.GetComponent<Collider2D>().enabled = false;
     }
 
     public void EnableColliders() {
         // Activar colisiones
+        fish.GetComponent<Collider2D>().enabled = true;
     }
 }
