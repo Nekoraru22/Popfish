@@ -62,6 +62,11 @@ public class BubbleScript : MonoBehaviour
         return count;
     }
 
+    // Check if there are enough bubbles
+    public bool HasEnoughBubbles(int bubbles) {
+        return CountBubbles() >= bubbles;
+    }
+
     // Remove 1 bubble (menu method for testing)
     [ContextMenu("Remove Bubble")]
     public void RemoveBubble() {

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1029c0f16ce02494ebbbb6f7363e5ace
+guid: 9dd9b1542c1c71b47bc046f16380d0a6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2000304209446663143
-    second: caja_0
+      213: 5898398846734760976
+    second: Pincho_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: caja_0
+      name: Pincho_0
       rect:
         serializedVersion: 2
-        x: 515
-        y: 365
-        width: 1024
-        height: 945
+        x: 0
+        y: 0
+        width: 32
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7e379c6941282cb10800000000000000
-      internalID: 2000304209446663143
+      spriteID: 01cf23300825bd150800000000000000
+      internalID: 5898398846734760976
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      caja_0: 2000304209446663143
+      Pincho_0: 5898398846734760976
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

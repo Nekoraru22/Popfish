@@ -27,8 +27,6 @@ public class FishScript : MonoBehaviour
 
     public BoxCollider2D PoisonCollider2D;
 
-    private bool isOnPlatform = true;
-
     // Controles por default
     public KeyCode keyIzquierda = KeyCode.A;
     public KeyCode KeyDerecha = KeyCode.D;
@@ -114,6 +112,23 @@ public class FishScript : MonoBehaviour
         bool needsWrapping = false;
         
 
+        if (isRotating)
+        {
+            rotationProgress += Time.deltaTime * 3f; // Adjust speed by changing 3f
+            if (rotationProgress >= 1f)
+            {
+                rotationProgress = 1f;
+                isRotating = false;
+                currentYRotation = targetRotation;
+            }
+            else
+            {
+                // Smooth easing curve
+                float t = EaseInOutCubic(rotationProgress);
+                currentYRotation = Mathf.Lerp(startRotation, targetRotation, t);
+            }
+        }
+
         if (body.IsTouching(ContactFilter))
         {
             if (!splatPlayed)
@@ -143,23 +158,6 @@ public class FishScript : MonoBehaviour
                 movimiento.x = 0.0f;
             }
             else movimiento.x = 0.0f;
-
-            if (isRotating)
-            {
-                rotationProgress += Time.deltaTime * 3f; // Adjust speed by changing 3f
-                if (rotationProgress >= 1f)
-                {
-                    rotationProgress = 1f;
-                    isRotating = false;
-                    currentYRotation = targetRotation;
-                }
-                else
-                {
-                    // Smooth easing curve
-                    float t = EaseInOutCubic(rotationProgress);
-                    currentYRotation = Mathf.Lerp(startRotation, targetRotation, t);
-                }
-            }
 
             transform.rotation = Quaternion.Euler(0, currentYRotation, 0);
 
