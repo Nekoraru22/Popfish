@@ -10,7 +10,6 @@ public class GameStartTriggerScript : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Player entered the trigger");
         if (other.gameObject.CompareTag("Fish")) {
             Debug.Log("Player entered the trigger");
             fishController.GetComponent<FishControllerScript>().EnableColliders();

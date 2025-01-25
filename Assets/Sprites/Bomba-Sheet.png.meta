@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c66668ad8f9907c438b16d7274451755
+guid: 38505ce0e32e3384cbb1e3cc41e0ca29
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -175,6 +175,19 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -884,7 +897,38 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Bomba-Sheet_0: 554840447477144680
+      Bomba-Sheet_1: -5881241337150195283
+      Bomba-Sheet_10: -7278564451907860131
+      Bomba-Sheet_11: -6395191767798820360
+      Bomba-Sheet_12: -8758223894069336174
+      Bomba-Sheet_13: 4024967587689135844
+      Bomba-Sheet_14: 8703607896670666866
+      Bomba-Sheet_15: -3096678724383191668
+      Bomba-Sheet_16: 238424717673613021
+      Bomba-Sheet_17: 1850406398716661034
+      Bomba-Sheet_18: 7512256714313865682
+      Bomba-Sheet_19: -4926033067216651763
+      Bomba-Sheet_2: -3597739155626728868
+      Bomba-Sheet_20: -4122848803001255356
+      Bomba-Sheet_21: -6286293299202093913
+      Bomba-Sheet_22: -5906226661293670264
+      Bomba-Sheet_23: -1257627030339507579
+      Bomba-Sheet_24: 2797019697488176247
+      Bomba-Sheet_25: 2705271479369588783
+      Bomba-Sheet_26: 8569783781313213542
+      Bomba-Sheet_27: 5377131201579479385
+      Bomba-Sheet_28: 1810706934412195846
+      Bomba-Sheet_29: -6711962578668302389
+      Bomba-Sheet_3: -7170922026780714352
+      Bomba-Sheet_30: 1704032791473013264
+      Bomba-Sheet_4: -8935170978299806795
+      Bomba-Sheet_5: 5515290794478999399
+      Bomba-Sheet_6: -7301976549956946695
+      Bomba-Sheet_7: -7465832205602690562
+      Bomba-Sheet_8: 8567626458665998641
+      Bomba-Sheet_9: 1973462121068959684
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
