@@ -5,12 +5,12 @@ public class OxygenScript : MonoBehaviour
 {
     public Slider slider;
 
-    public void SetMaxOxygen() {
-        slider.maxValue = 100;
-        slider.value = 100;
+    public void SetMaxOxygen(float max) {
+        slider.maxValue = max;
+        slider.value = max;
     }
 
-    public void SetOxygen(int oxygen) {
+    public void SetOxygen(float oxygen) {
         slider.value = oxygen;
     }
 }
