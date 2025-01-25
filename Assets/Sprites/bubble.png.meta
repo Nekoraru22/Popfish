@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ff2929a80cb64d149a324c90703eb114
+guid: fc9001ea9cffeaf45963e6f116458ab2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 192739087265457539
-    second: pixel-art-soap-speech-bubble-png_0
+      213: 5942920215655233890
+    second: Pompa_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pixel-art-soap-speech-bubble-png_0
+      name: Pompa_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 980
-        height: 980
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3856acebd2fbca200800000000000000
-      internalID: 192739087265457539
+      spriteID: 2693e9ef27e797250800000000000000
+      internalID: 5942920215655233890
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      pixel-art-soap-speech-bubble-png_0: 192739087265457539
+      Pompa_0: 5942920215655233890
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
