@@ -18,6 +18,8 @@ public class FishScript : MonoBehaviour
     public GameObject oxygenController;
     private OxygenScript oxygenScript;
 
+    public BoxCollider2D PoisonCollider2D;
+
     private bool isOnPlatform = true;
 
     // Controles por default
@@ -168,7 +170,9 @@ public class FishScript : MonoBehaviour
                 Charge = 0f;
             }
         }
-
+        
+        
+        
         // Legs animation
         if (isMovingHorizontally)
         {
@@ -198,6 +202,15 @@ public class FishScript : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("PoisonSpill"))  // Make sure to set this tag on your poison prefab
+        {
+            Debug.Log("ESTOY ENVENENADO");
+            setPosion();
+        }
+    }
+    
     private void StartRotation(float start, float target)
     {
         startRotation = start;

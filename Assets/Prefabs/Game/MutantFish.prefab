@@ -123,21 +123,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 8672628812075147139}
-  Collider: {fileID: 5551659560196634765}
   ChargeRate: 5
   MaxCharge: 20
+  maxTimeWater: 20
+  underWater: 0
+  oxygenController: {fileID: 0}
+  PoisonCollider2D: {fileID: -6079364106447776339, guid: a32267ee0c0f9d54195b435a96165bde, type: 3}
   keyIzquierda: 97
   KeyDerecha: 100
   KeyPlanear: 119
   KeyCheckPoint: 114
   KeyBomba: 115
   KeyGancho: 304
-  CurrentBubbles: 0
-  MaxBubbles: 0
+  isReversed: 0
+  isStuned: 0
   leftLeg: {fileID: 6859780373466970696}
   rightLeg: {fileID: 3799690007147708124}
   stepDuration: 0.5
   maxRotationAngle: 15
+  ContactFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!1 &6322943612001160385
 GameObject:
   m_ObjectHideFlags: 0
