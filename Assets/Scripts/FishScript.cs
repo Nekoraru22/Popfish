@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -19,7 +20,10 @@ public class FishScript : MonoBehaviour
     public float ChargeRate = 15.0f;
     public float MaxCharge = 15.0f;
     private float Charge = 0;
-
+    
+    public AudioSource[] jumps;
+    public AudioSource splat;
+    
     private bool isPoisoned = false;
     private float poisonedTimer = 0.0f;
 
@@ -30,8 +34,6 @@ public class FishScript : MonoBehaviour
     private OxygenScript oxygenScript;
 
     public BoxCollider2D PoisonCollider2D;
-
-    private bool isOnPlatform = true;
 
     // Controles por default
     public KeyCode keyIzquierda = KeyCode.A;
@@ -71,6 +73,7 @@ public class FishScript : MonoBehaviour
     private float startRotation;
     private float targetRotation;
 
+    private bool splatPlayed = false;
     void Start()
     {
         prefabBomba = GameObject.Find("BombPowerUp");
@@ -120,9 +123,32 @@ public class FishScript : MonoBehaviour
         Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 newPosition = transform.position;
         bool needsWrapping = false;
+        
+
+        if (isRotating)
+        {
+            rotationProgress += Time.deltaTime * 3f; // Adjust speed by changing 3f
+            if (rotationProgress >= 1f)
+            {
+                rotationProgress = 1f;
+                isRotating = false;
+                currentYRotation = targetRotation;
+            }
+            else
+            {
+                // Smooth easing curve
+                float t = EaseInOutCubic(rotationProgress);
+                currentYRotation = Mathf.Lerp(startRotation, targetRotation, t);
+            }
+        }
 
         if (body.IsTouching(ContactFilter))
         {
+            if (!splatPlayed)
+            {
+                splat.Play();
+                splatPlayed = true;
+            }
             
             if (derecha && !izquierda)
             {
@@ -146,23 +172,6 @@ public class FishScript : MonoBehaviour
             }
             else movimiento.x = 0.0f;
 
-            if (isRotating)
-            {
-                rotationProgress += Time.deltaTime * 3f; // Adjust speed by changing 3f
-                if (rotationProgress >= 1f)
-                {
-                    rotationProgress = 1f;
-                    isRotating = false;
-                    currentYRotation = targetRotation;
-                }
-                else
-                {
-                    // Smooth easing curve
-                    float t = EaseInOutCubic(rotationProgress);
-                    currentYRotation = Mathf.Lerp(startRotation, targetRotation, t);
-                }
-            }
-
             transform.rotation = Quaternion.Euler(0, currentYRotation, 0);
 
             float hHeight = Camera.main.orthographicSize;
@@ -179,20 +188,21 @@ public class FishScript : MonoBehaviour
                 Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge/2);
                 else
                 Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
-
+                
             }
             if (Input.GetKeyUp(KeySalto))
             {
                 body.AddForce(movimiento * Charge, ForceMode2D.Impulse);
                 currentSaltos = 1;
                 Charge = 0f;
-                body.gravityScale = 5.0f;
+                JumpEffect()
             }
         }
         else if (currentSaltos == 1 && currentSaltos < numMaxSaltos && Input.GetKeyDown(KeySalto))
         {
             body.AddForce(movimiento * MaxCharge / 2, ForceMode2D.Impulse);
             currentSaltos = 0;
+            JumpEffect()
 
         }
         else if (slowFalling)
@@ -204,7 +214,12 @@ public class FishScript : MonoBehaviour
                     body.linearVelocityX = 5.0f;
                 if (Input.GetKeyDown(keyIzquierda))
                     body.linearVelocityX = -5.0f;
+                
             }
+        }
+        else
+        {
+            splatPlayed = false;
         }
         
         if (Input.GetKeyDown(KeyBomba))
@@ -350,6 +365,27 @@ public class FishScript : MonoBehaviour
     {
         // Restar burbujas
         bubbleScript.RemoveBubbles(bubbles);
+    }
+
+    private void JumpEffect()
+    {
+        // Make it play a jump sound effect here
+        // Play random jump sound
+        if (jumps != null && jumps.Length > 0)
+        {
+            // Get random index from jumps array
+            int randomIndex = Random.Range(0, jumps.Length);
+
+            // Make sure the selected AudioSource exists
+            if (jumps[randomIndex] != null)
+            {
+                // Stop the current sound if it's playing (optional)
+                jumps[randomIndex].Stop();
+    
+                // Play the random jump sound
+                jumps[randomIndex].Play();
+            }
+        }
     }
 
 }
