@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4421699323891227437}
   m_Layer: 0
   m_Name: Fish
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,6 +133,8 @@ MonoBehaviour:
   Collider: {fileID: 4421699323891227437}
   ChargeRate: 15
   MaxCharge: 15
+  keyIzquierda: 97
+  KeyDerecha: 100
 --- !u!61 &4421699323891227437
 BoxCollider2D:
   m_ObjectHideFlags: 0

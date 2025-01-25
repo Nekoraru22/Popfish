@@ -25,7 +25,6 @@ public class FishScript : MonoBehaviour
     {
         //Tengo que arreglar la relacion entre altura y anchura para que salte mas que vaya de lados
         //pero que deje hacer la animación de lado a lado
-        Debug.Log(movimiento.x);
         movimiento.Set(movimiento.x, 1.7f);
         bool izquierda = Input.GetKey(keyIzquierda);
         bool derecha = Input.GetKey(KeyDerecha);
