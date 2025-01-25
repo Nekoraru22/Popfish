@@ -5,10 +5,13 @@ public class FishControllerScript : MonoBehaviour
 {
     public GameObject fish;
     private FishScript fishScript;
+    public GameObject bubbleControler;
+    private BubbleScript bubbleScript;
 
     private void Start()
     {
         fishScript = fish.GetComponent<FishScript>();
+        bubbleScript = bubbleControler.GetComponent<BubbleScript>();
     }
     //fish = GameObject.Find("fish").GetComponent<FishScript>();
 
@@ -34,11 +37,12 @@ public class FishControllerScript : MonoBehaviour
 
     public void LoseBubbles(int bubbles) {
         // Restar burbujas
+        bubbleScript.AddBubbles(bubbles);
     }
 
     public void RefillBubbles(int bubbles) {
         // Sumar burbujas
-        // Si -1, sumar todas las burbujas
+        bubbleScript.RemoveBubbles(bubbles);
     }
 
     public void DisableColliders() {

@@ -2022,6 +2022,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 542097155560833583, guid: 4f9503eb5f073db40ba1ccc0926be786, type: 3}
   m_PrefabInstance: {fileID: 1080740124}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1080740126 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3965573574989304200, guid: 4f9503eb5f073db40ba1ccc0926be786, type: 3}
+  m_PrefabInstance: {fileID: 1080740124}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1086702384
 GameObject:
   m_ObjectHideFlags: 0
@@ -2067,6 +2072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fish: {fileID: 582407658}
+  bubbleControler: {fileID: 1080740126}
 --- !u!1 &1262644376
 GameObject:
   m_ObjectHideFlags: 0
