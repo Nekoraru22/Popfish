@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2161066368618152146}
   m_Layer: 0
   m_Name: FishBueno
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,6 +126,14 @@ MonoBehaviour:
   Collider: {fileID: 5551659560196634765}
   ChargeRate: 5
   MaxCharge: 20
+  keyIzquierda: 97
+  KeyDerecha: 100
+  KeyPlanear: 119
+  KeyCheckPoint: 114
+  KeyBomba: 115
+  KeyGancho: 304
+  CurrentBubbles: 0
+  MaxBubbles: 0
   leftLeg: {fileID: 6859780373466970696}
   rightLeg: {fileID: 3799690007147708124}
   stepDuration: 0.5
