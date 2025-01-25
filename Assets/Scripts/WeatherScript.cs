@@ -5,6 +5,7 @@ using System.Collections;
 
 public class WeatherManager : MonoBehaviour {
     [SerializeField] private string apiKey;
+    private bool enable = false;
     private const string BaseUrl = "https://opendata.aemet.es/opendata/api";
 
     [System.Serializable]
@@ -62,8 +63,10 @@ public class WeatherManager : MonoBehaviour {
     }
 
     void Start() {
-        StartCoroutine(GetAverageTemperature("03122", (averageTemp, time) => {
-            Debug.Log($"Time: {time} - Average temperature: {averageTemp}°C");
-        }));
+        if (enable) {
+            StartCoroutine(GetAverageTemperature("03122", (averageTemp, time) => {
+                Debug.Log($"Time: {time} - Average temperature: {averageTemp}°C");
+            }));
+        }
     }
 }
