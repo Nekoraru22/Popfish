@@ -1678,6 +1678,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9184502600846521520, guid: 79ada888dda08d8488117cb603f19352, type: 3}
+      propertyPath: FishScriptObj
+      value: 
+      objectReference: {fileID: 582407658}
+    - target: {fileID: 9184502600846521520, guid: 79ada888dda08d8488117cb603f19352, type: 3}
+      propertyPath: FishControllerObj
+      value: 
+      objectReference: {fileID: 1086702384}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2781,7 +2789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1086702385}
   - component: {fileID: 1086702386}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FishController
   m_TagString: Fish
   m_Icon: {fileID: 0}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8175718231263439040}
   - component: {fileID: 3209074556695605021}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: BodySprite
   m_TagString: Bomb
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 9037620354555682906}
   - component: {fileID: 5975952042007110976}
   - component: {fileID: 9184502600846521520}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Bomb
   m_TagString: Bomb
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExplosionPower: 30
   timer: -69
-  FishScriptObj: {fileID: 0}
+  FishScriptObj: {fileID: 1627067559433176676}
   FishControllerObj: {fileID: 0}
 --- !u!1 &2355515912629553911
 GameObject:
