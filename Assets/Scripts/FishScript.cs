@@ -14,8 +14,6 @@ public class FishScript : MonoBehaviour
 
     private bool isOnPlatform = true;
 
-    public Camera camera;
-
     //Controles por default
     public KeyCode keyIzquierda = KeyCode.A;
     public KeyCode KeyDerecha = KeyCode.D;
@@ -79,7 +77,7 @@ public class FishScript : MonoBehaviour
         bool izquierda = Input.GetKey(keyIzquierda);
         bool derecha = Input.GetKey(KeyDerecha);
 
-        Vector3 viewportPosition = camera.WorldToViewportPoint(transform.position);
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 newPosition = transform.position;
         bool needsWrapping = false;
 
@@ -97,11 +95,11 @@ public class FishScript : MonoBehaviour
             movimiento.x = 0.0f;
         }
 
-        float hHeight = camera.orthographicSize;
-        float hWidth = hHeight * camera.aspect;
-        if (this.transform.position.x < camera.transform.position.x - hWidth - 10)
+        float hHeight = Camera.main.orthographicSize;
+        float hWidth = hHeight * Camera.main.aspect;
+        if (this.transform.position.x < Camera.main.transform.position.x - hWidth - 10)
         {
-            this.transform.position = camera.transform.position + new Vector3(0, hWidth, 0);
+            this.transform.position = Camera.main.transform.position + new Vector3(0, hWidth, 0);
         }
 
         // Charge and jump logic
@@ -133,26 +131,26 @@ public class FishScript : MonoBehaviour
         }
 
         // Check horizontal bounds
-        if (viewportPosition.x < 0 - (objectWidth / camera.orthographicSize))
+        if (viewportPosition.x < 0 - (objectWidth / Camera.main.orthographicSize))
         {
-            newPosition.x = camera.ViewportToWorldPoint(new Vector3(1, viewportPosition.y, viewportPosition.z)).x;
+            newPosition.x = Camera.main.ViewportToWorldPoint(new Vector3(1, viewportPosition.y, viewportPosition.z)).x;
             needsWrapping = true;
         }
-        else if (viewportPosition.x > 1 + (objectWidth / camera.orthographicSize))
+        else if (viewportPosition.x > 1 + (objectWidth / Camera.main.orthographicSize))
         {
-            newPosition.x = camera.ViewportToWorldPoint(new Vector3(0, viewportPosition.y, viewportPosition.z)).x;
+            newPosition.x = Camera.main.ViewportToWorldPoint(new Vector3(0, viewportPosition.y, viewportPosition.z)).x;
             needsWrapping = true;
         }
 
         // Check vertical bounds
-        if (viewportPosition.y < 0 - (objectHeight / camera.orthographicSize))
+        if (viewportPosition.y < 0 - (objectHeight / Camera.main.orthographicSize))
         {
-            newPosition.y = camera.ViewportToWorldPoint(new Vector3(viewportPosition.x, 1, viewportPosition.z)).y;
+            newPosition.y = Camera.main.ViewportToWorldPoint(new Vector3(viewportPosition.x, 1, viewportPosition.z)).y;
             needsWrapping = true;
         }
-        else if (viewportPosition.y > 1 + (objectHeight / camera.orthographicSize))
+        else if (viewportPosition.y > 1 + (objectHeight / Camera.main.orthographicSize))
         {
-            newPosition.y = camera.ViewportToWorldPoint(new Vector3(viewportPosition.x, 0, viewportPosition.z)).y;
+            newPosition.y = Camera.main.ViewportToWorldPoint(new Vector3(viewportPosition.x, 0, viewportPosition.z)).y;
             needsWrapping = true;
         }
 
