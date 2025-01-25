@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1029c0f16ce02494ebbbb6f7363e5ace
+guid: 43dbdb9ab59df2241921e8ddc2609552
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2000304209446663143
-    second: caja_0
+      213: -8045281278274666541
+    second: hability_box_temp_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: caja_0
+      name: hability_box_temp_0
       rect:
         serializedVersion: 2
-        x: 515
-        y: 365
-        width: 1024
-        height: 945
+        x: 0
+        y: 0
+        width: 406
+        height: 406
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7e379c6941282cb10800000000000000
-      internalID: 2000304209446663143
+      spriteID: 3df765a9d4b695090800000000000000
+      internalID: -8045281278274666541
       vertices: []
       indices: 
       edges: []
@@ -147,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      caja_0: 2000304209446663143
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
