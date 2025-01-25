@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3a565805e8eb32d4386674776e2446a0
+guid: 674c7c9cedc153c40b4150c281722e42
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7958147730908029603
-    second: Veneno_0
+      213: -391118091949209929
+    second: VenenoSinCalavera_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Veneno_0
+      name: VenenoSinCalavera_0
       rect:
         serializedVersion: 2
         x: 0
         y: 5
         width: 32
-        height: 22
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3a2aada7235017e60800000000000000
-      internalID: 7958147730908029603
+      spriteID: 7b68328ea28729af0800000000000000
+      internalID: -391118091949209929
       vertices: []
       indices: 
       edges: []
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Veneno_0: 7958147730908029603
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
