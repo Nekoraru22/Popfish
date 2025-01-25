@@ -18,6 +18,6 @@ public class CameraScript : MonoBehaviour
 
     private void FixedUpdate() {
         // Camera follows the player on the y axis
-        transform.position = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
+        transform.position = new Vector3(this.transform.position.x, player.transform.position.y, transform.position.z);
     }
 }
