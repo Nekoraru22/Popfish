@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fish
   - Platform
+  - Bomb
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - Map
   - Water
   - UI
-  - 
-  - 
+  - Bomb
+  - Player
   - 
   - 
   - 

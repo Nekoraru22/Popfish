@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SaltoDoble-Sheet_0: -6856308318805526617
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

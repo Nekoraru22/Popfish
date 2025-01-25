@@ -235,6 +235,10 @@ public class FishScript : MonoBehaviour
                 isOnPlatform = true;
             }
         }
+        if (collision.gameObject.CompareTag("Bomb"))
+        {
+            
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
