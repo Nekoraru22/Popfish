@@ -7,8 +7,8 @@ public class BombExplosion : MonoBehaviour
     public int timer;
     private float elapsedTime;
 
-    public GameObject FishScriptObj;
-    public GameObject FishControllerObj;
+    private GameObject FishScriptObj;
+    private GameObject FishControllerObj;
 
     private FishScript fishscript;
     private FishControllerScript fishController;
@@ -17,6 +17,12 @@ public class BombExplosion : MonoBehaviour
     {
         timer = 2;
         elapsedTime = 0f;
+        // BUSCAR FISHCONTROLLER FUERA DEL PREFAB
+
+
+        GameObject FishScriptObj = GameObject.Find("FishScript");
+        GameObject FishControllerObj = GameObject.FindGameObjectWithTag("Fish");
+        
         fishscript = FishScriptObj.GetComponent<FishScript>();
         fishController = FishControllerObj.GetComponent<FishControllerScript>();
     }
