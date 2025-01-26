@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1439901964107134272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.2293024, y: -5.071441, z: 0}
+  m_LocalPosition: {x: -7.2293024, y: -5.095, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -87,9 +87,9 @@ EdgeCollider2D:
   - {x: 0.52776814, y: -0.4005065}
   - {x: 1.5258884, y: -0.37896824}
   - {x: -0.5345993, y: -0.38479996}
-  - {x: -0.009563446, y: 0.38252926}
-  - {x: 0.5163593, y: -0.27067995}
-  - {x: 1.0035291, y: 0.4125209}
+  - {x: -0.02950859, y: 0.39449644}
+  - {x: 0.48045874, y: 0.38377047}
+  - {x: 1.0354409, y: 0.38459826}
   - {x: 1.5428, y: -0.3753066}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
