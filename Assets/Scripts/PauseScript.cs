@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PauseScript : MonoBehaviour
 {
+    public GameObject pauseMenu;
+
     public void ContinueGame() {
-        gameObject.SetActive(false);
+        pauseMenu.SetActive(false);
     }
 
     public void ExitGame() {
