@@ -89,8 +89,5 @@ public class SneakScript : MonoBehaviour
         }
 
         lengua.transform.position = new Vector3(lenguaPosicionInicial.x - lenguaPosicion * indiceX, lenguaPosicionInicial.y + lenguaPosicion*indiceY , lengua.transform.position.z);
-
-        // Aquí puedes usar `lenguaPosicion` para aplicar el movimiento a un objeto
-        Debug.Log("Posición de la lengua: " + lenguaPosicion);
     }
 }
