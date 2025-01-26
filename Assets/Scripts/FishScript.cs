@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections;
+
 public class FishScript : MonoBehaviour
 {
     public GameObject bubbleControler;
@@ -17,6 +22,7 @@ public class FishScript : MonoBehaviour
     private int currentSaltos = 0;
 
     private GameObject prefabBomba;
+    private GameObject prefabDobleSaltoAnimacion;
 
     public Rigidbody2D body;
     public float ChargeRate = 15.0f;
@@ -78,12 +84,14 @@ public class FishScript : MonoBehaviour
     private bool splatPlayed = false;
     void Start()
     {
-        prefabBomba = GameObject.Find("BombPowerUp");
+        prefabBomba = Resources.Load<GameObject>("BombPowerUp");
         oxygenScript = oxygenController.GetComponent<OxygenScript>();
         water = maxTimeWater;
         oxygenScript.SetMaxOxygen(maxTimeWater);
         body.gravityScale = 5.0f;
         bubbleScript = bubbleControler.GetComponent<BubbleScript>();
+
+        prefabDobleSaltoAnimacion = Resources.Load<GameObject>("SaltoDoble-Sheet_0");
     }
 
     private void FixedUpdate() {
@@ -199,6 +207,7 @@ public class FishScript : MonoBehaviour
             }
             if (Input.GetKeyUp(KeySalto))
             {
+                
                 body.AddForce(movimiento * Charge, ForceMode2D.Impulse);
                 currentSaltos = 1;
                 Charge = 0f;
@@ -207,10 +216,12 @@ public class FishScript : MonoBehaviour
         }
         else if (currentSaltos == 1 && currentSaltos < numMaxSaltos && Input.GetKeyDown(KeySalto) && bubbleScript.HasEnoughBubbles(1))
         {
+
             body.AddForce(movimiento * MaxCharge / 2, ForceMode2D.Impulse);
             currentSaltos = 0;
             JumpEffect();
             bubbleScript.RemoveBubbles(1);
+            StartCoroutine(AnimacionSalto());
 
         }
         else if (slowFalling && bubbleScript.HasEnoughBubbles(1))
@@ -388,7 +399,7 @@ public class FishScript : MonoBehaviour
         if (jumps != null && jumps.Length > 0)
         {
             // Get random index from jumps array
-            int randomIndex = Random.Range(0, jumps.Length);
+            int randomIndex = UnityEngine.Random.Range(0, jumps.Length);
 
             // Make sure the selected AudioSource exists
             if (jumps[randomIndex] != null)
@@ -400,6 +411,39 @@ public class FishScript : MonoBehaviour
                 jumps[randomIndex].Play();
             }
         }
+    }
+
+
+    IEnumerator AnimacionSalto()
+    {
+        Vector3 posicion = body.transform.position;
+        Quaternion rotation = Quaternion.identity;
+
+        // Instanciar la bomba
+        GameObject instanceWithTransform = Instantiate(prefabDobleSaltoAnimacion, posicion, rotation);
+        Debug.Log("ªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªª");
+
+        // Esperar 0.4 segundos
+        yield return new WaitForSeconds(0.4f);
+
+        // Destruir el objeto de la bomba
+        Destroy(instanceWithTransform);
+    }
+    void AnimacionSalto2()
+    {
+        Vector3 posicion = body.transform.position;
+        posicion.y += 1;
+        Quaternion rotation = Quaternion.identity;
+
+        // Instanciar la bomba
+        GameObject instanceWithTransform = Instantiate(prefabDobleSaltoAnimacion, posicion, rotation);
+        Debug.Log("Saltando");
+
+        // Esperar 0.4 segundos
+        Thread.Sleep(400);
+
+        // Destruir el objeto de la bomba
+        Destroy(instanceWithTransform);
     }
 
 }
