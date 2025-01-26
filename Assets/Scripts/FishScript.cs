@@ -1,31 +1,57 @@
+using NUnit.Framework.Constraints;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections;
 
 public class FishScript : MonoBehaviour
 {
+    public GameObject bubbleControler;
+    private BubbleScript bubbleScript;
+
+    private bool sueloSlowFalling = true;
+
+    private bool slowFalling = true;
+
+    private int numMaxSaltos = 2;
+    private int currentSaltos = 0;
+
+    private GameObject prefabBomba;
+    private GameObject prefabDobleSaltoAnimacion;
+
     public Rigidbody2D body;
-    public Collider2D Collider;
     public float ChargeRate = 15.0f;
     public float MaxCharge = 15.0f;
     private float Charge = 0;
-
+    
+    public AudioSource[] jumps;
+    public AudioSource splat;
+    
     private bool isPoisoned = false;
     private float poisonedTimer = 0.0f;
 
-    public float maxTimeWater = 20.0f;
-    public bool underWater = true;
+    public int maxTimeWater = 20;
+    public bool underWater = false;
     private float water = 0.0f;
+    public GameObject oxygenController;
+    private OxygenScript oxygenScript;
 
-    private bool isOnPlatform = true;
+    public BoxCollider2D PoisonCollider2D;
 
-    //Controles por default
+    // Controles por default
     public KeyCode keyIzquierda = KeyCode.A;
     public KeyCode KeyDerecha = KeyCode.D;
     public KeyCode KeyPlanear = KeyCode.W;
     public KeyCode KeyCheckPoint = KeyCode.R;
     public KeyCode KeyBomba = KeyCode.S;
     public KeyCode KeyGancho = KeyCode.LeftShift;
+    public KeyCode KeySalto = KeyCode.Space;
+    public bool isReversed = false;
 
     private float stunTimer = 0.0f;
     public bool isStuned = false;
@@ -42,38 +68,49 @@ public class FishScript : MonoBehaviour
 
     [Tooltip("Maximum rotation angle for legs")]
     public float maxRotationAngle = 15f;
+    public ContactFilter2D ContactFilter;
 
     private float animationTimer = 0f;
     private bool isMovingHorizontally = false;
 
     private float objectWidth;
-    private float objectHeight;
 
+    private float currentYRotation = 0f;
+    private float rotationProgress = 0f;
+    private bool isRotating = false;
+    private float startRotation;
+    private float targetRotation;
+
+    private bool splatPlayed = false;
     void Start()
     {
+        prefabBomba = Resources.Load<GameObject>("Prefabs/Game/BombPowerUp");
+        prefabDobleSaltoAnimacion = Resources.Load<GameObject>("Prefabs/Game/SaltoDoble-Sheet_0");
 
+        oxygenScript = oxygenController.GetComponent<OxygenScript>();
+        bubbleScript = bubbleControler.GetComponent<BubbleScript>();
+
+        water = maxTimeWater;
+        oxygenScript.SetMaxOxygen(maxTimeWater);
+
+        body.gravityScale = 5.0f;
     }
-    void Update()
-    {
-        if (isPoisoned)
-        {
+
+    private void FixedUpdate() {
+        if (isPoisoned) {
             poisonedTimer -= Time.deltaTime;
-            if (poisonedTimer < 0.0f)
-            {
+            if (poisonedTimer < 0.0f) {
                 isPoisoned = false;
             }
         }
-        if (!underWater)
-        {
-            water -= Time.deltaTime;
-            if (water < 0.0f)
-            {
+        underWater = false;
+        if (!underWater) {
+            water = Mathf.Max(water - Time.deltaTime, 0.0f);
+            oxygenScript.SetOxygen(water);
+            if (water <= 0.0f && !isReversed) {
                 SetInverseControls();
             }
         }
-        //Tengo que arreglar la relacion entre altura y anchura para que salte mas que vaya de lados
-        //pero que deje hacer la animaciï¿½n de lado a lado
-        isMovingHorizontally = body.linearVelocity.magnitude > 0.1f;
         if (isStuned)
         {
             stunTimer -= Time.deltaTime;
@@ -81,6 +118,14 @@ public class FishScript : MonoBehaviour
             {
                 isStuned = false;
             }
+        }
+    }
+
+    void Update()
+    {
+        isMovingHorizontally = body.linearVelocity.magnitude > 0.1f;
+        if (isStuned)
+        {
             return;
         }
         movimiento.Set(movimiento.x, 1.7f);
@@ -90,22 +135,62 @@ public class FishScript : MonoBehaviour
         Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 newPosition = transform.position;
         bool needsWrapping = false;
+        
 
-        if (isOnPlatform)
+        if (isRotating)
         {
+            rotationProgress += Time.deltaTime * 3f; // Adjust speed by changing 3f
+            
+            if (rotationProgress >= 1f)
+            {
+                rotationProgress = 1f;
+                isRotating = false;
+                currentYRotation = targetRotation;
+            }
+            else
+            {
+                // Smooth easing curve
+                float t = EaseInOutCubic(rotationProgress);
+                currentYRotation = Mathf.Lerp(startRotation, targetRotation, t);
+            }
+
+            if (Mathf.Abs(currentYRotation) != 90 && Mathf.Abs(currentYRotation) != 270)
+            {
+                transform.rotation = Quaternion.Euler(0, currentYRotation, 0);
+            }
+        }
+
+        if (body.IsTouching(ContactFilter))
+        {
+            sueloSlowFalling = true;
+            if (!splatPlayed)
+            {
+                splat.Play();
+                splatPlayed = true;
+            }
+
             if (derecha && !izquierda)
             {
                 movimiento.x = 1.0f;
+                if (currentYRotation > 90f && !isRotating) // If facing left-ish and not already rotating
+                {
+                    StartRotation(180f, 0f);
+                }
             }
             else if (izquierda && !derecha)
             {
                 movimiento.x = -1.0f;
+                if (currentYRotation < 90f && !isRotating) // If facing right-ish and not already rotating
+                {
+                    StartRotation(0f, 180f);
+                }
             }
             else if (derecha && izquierda)
             {
                 movimiento.x = 0.0f;
             }
             else movimiento.x = 0.0f;
+
             float hHeight = Camera.main.orthographicSize;
             float hWidth = hHeight * Camera.main.aspect;
             if (this.transform.position.x < Camera.main.transform.position.x - hWidth - 10)
@@ -114,21 +199,62 @@ public class FishScript : MonoBehaviour
             }
 
             // Charge and jump logic
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeySalto))
             {
                 if (isPoisoned)
-                Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge/2);
+                    Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge / 2);
                 else
-                Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
+                    Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
 
             }
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeySalto))
             {
+                
                 body.AddForce(movimiento * Charge, ForceMode2D.Impulse);
+                currentSaltos = 1;
                 Charge = 0f;
+                JumpEffect();
             }
         }
+        else if (currentSaltos == 1 && currentSaltos < numMaxSaltos && Input.GetKeyDown(KeySalto) && bubbleScript.HasEnoughBubbles(1))
+        {
 
+            body.AddForce(movimiento * MaxCharge / 2, ForceMode2D.Impulse);
+            currentSaltos = 0;
+            JumpEffect();
+            bubbleScript.RemoveBubbles(1);
+            StartCoroutine(AnimacionSalto());
+
+        }
+        else if (slowFalling && bubbleScript.HasEnoughBubbles(1))
+        {
+            if (Input.GetKey(KeyPlanear))
+            {
+                if (sueloSlowFalling)
+                {
+                    bubbleScript.RemoveBubbles(1);
+                    sueloSlowFalling = false;
+                }
+                body.linearVelocityY = -3f;
+                if (Input.GetKeyDown(KeyDerecha))
+                    body.linearVelocityX = 5.0f;
+                if (Input.GetKeyDown(keyIzquierda))
+                    body.linearVelocityX = -5.0f;
+            }
+        }
+        else
+        {
+            splatPlayed = false;
+        }
+        
+        if (Input.GetKeyDown(KeyBomba) && bubbleScript.HasEnoughBubbles(1))
+        {
+            bubbleScript.RemoveBubbles(1);
+            Vector3 posicion = body.transform.position;
+            Quaternion rotation = Quaternion.identity;
+            GameObject instanceWithTransform = Instantiate(prefabBomba, posicion, rotation);
+        }
+        
         // Legs animation
         if (isMovingHorizontally)
         {
@@ -156,6 +282,28 @@ public class FishScript : MonoBehaviour
         {
             transform.position = newPosition;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("PoisonSpill"))  // Make sure to set this tag on your poison prefab
+        {
+            Debug.Log("ESTOY ENVENENADO");
+            SetPoison();
+        }
+    }
+    
+    private void StartRotation(float start, float target)
+    {
+        startRotation = start;
+        targetRotation = target;
+        rotationProgress = 0f;
+        isRotating = true;
+    }
+
+    private float EaseInOutCubic(float t)
+    {
+        return t < 0.5f ? 4f * t * t * t : 1f - Mathf.Pow(-2f * t + 2f, 3f) / 2f;
     }
 
     void UpdateLegAnimation()
@@ -199,6 +347,7 @@ public class FishScript : MonoBehaviour
         KeyCode auxiliar = keyIzquierda;
         keyIzquierda = KeyDerecha;
         KeyDerecha = auxiliar;
+        isReversed = true;
     }
 
     public void SetNormalControls()
@@ -206,14 +355,15 @@ public class FishScript : MonoBehaviour
         KeyCode auxiliar = keyIzquierda;
         keyIzquierda = KeyDerecha;
         KeyDerecha = auxiliar;
+        isReversed = false;
     }
-    public void setStunned()
+    public void SetStunned()
     {
         isStuned = true;
         stunTimer = 2.0f;
     }
 
-    public void setPosion()
+    public void SetPoison()
     {
         isPoisoned = true;
         poisonedTimer = 5f;
@@ -225,24 +375,77 @@ public class FishScript : MonoBehaviour
         water = maxTimeWater;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void SetNumSalots(int newnumSaltos)
     {
-        if (collision.gameObject.CompareTag("Platform"))
+        numMaxSaltos = newnumSaltos;
+    }
+    public void RefillBubbles(int bubbles)
+    {
+        // Sumar burbujas
+        underWater = true;
+        SetNormalControls();
+        bubbleScript.AddBubbles(bubbles);
+    }
+
+    public void LoseBubbles(int bubbles)
+    {
+        // Restar burbujas
+        bubbleScript.RemoveBubbles(bubbles);
+    }
+
+    private void JumpEffect()
+    {
+        // Make it play a jump sound effect here
+        // Play random jump sound
+        if (jumps != null && jumps.Length > 0)
         {
-            // Comprueba si el jugador estÃ¡ por encima de la plataforma
-            if (transform.position.y > collision.transform.position.y)
+            // Get random index from jumps array
+            int randomIndex = UnityEngine.Random.Range(0, jumps.Length);
+
+            // Make sure the selected AudioSource exists
+            if (jumps[randomIndex] != null)
             {
-                isOnPlatform = true;
+                // Stop the current sound if it's playing (optional)
+                jumps[randomIndex].Stop();
+    
+                // Play the random jump sound
+                jumps[randomIndex].Play();
             }
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+
+    IEnumerator AnimacionSalto()
     {
-        if (collision.gameObject.CompareTag("Platform"))
-        {
-            isOnPlatform = false;
-        }
+        Vector3 posicion = body.transform.position;
+        Quaternion rotation = Quaternion.identity;
+
+        // Instanciar la bomba
+        GameObject instanceWithTransform = Instantiate(prefabDobleSaltoAnimacion, posicion, rotation);
+        Debug.Log("ªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªªª");
+
+        // Esperar 0.4 segundos
+        yield return new WaitForSeconds(0.4f);
+
+        // Destruir el objeto de la bomba
+        Destroy(instanceWithTransform);
+    }
+
+    void AnimacionSalto2()
+    {
+        Vector3 posicion = body.transform.position;
+        posicion.y += 1;
+        Quaternion rotation = Quaternion.identity;
+
+        // Instanciar la bomba
+        GameObject instanceWithTransform = Instantiate(prefabDobleSaltoAnimacion, posicion, rotation);
+        Debug.Log("Saltando");
+
+        // Esperar 0.4 segundos
+        Thread.Sleep(400);
+
+        // Destruir el objeto de la bomba
+        Destroy(instanceWithTransform);
     }
 
 }

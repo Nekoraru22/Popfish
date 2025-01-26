@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Fish
   - Platform
+  - PoisonSpill
+  - Bomba
+  - Bomb
   layers:
   - Default
   - TransparentFX
