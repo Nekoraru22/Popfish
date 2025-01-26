@@ -10,8 +10,7 @@ public class FishControllerScript : MonoBehaviour
 
     private void Start()
     {
-        fishScript = fish.GetComponent<FishScript>();
-        bubbleScript = bubbleControler.GetComponent<BubbleScript>();
+
     }
     //fish = GameObject.Find("fish").GetComponent<FishScript>();
 
@@ -35,18 +34,6 @@ public class FishControllerScript : MonoBehaviour
         fishScript.SetNormalControls();
     }
 
-    public void LoseBubbles(int bubbles) {
-        // Restar burbujas
-        bubbleScript.RemoveBubbles(bubbles);
-    }
-
-    public void RefillBubbles(int bubbles) {
-        // Sumar burbujas
-        fishScript.underWater = true;
-        fishScript.SetNormalControls();
-        bubbleScript.AddBubbles(bubbles);
-    }
-
     public void EndRefill()
     {
         fishScript.SetWater();
@@ -65,6 +52,18 @@ public class FishControllerScript : MonoBehaviour
     public void EnableSlowFalling()
     {
         // Activar caida lenta / planeo
+    }
+    public void DisableSlowFalling()
+    {
+
+    }
+
+    public void EnableDobleJump()
+    {
+        fishScript.setNumSaltos(2);
+    }
+    public void DisableDobleJump() { 
+        fishScript.setNumSaltos(1);
     }
 
 }
