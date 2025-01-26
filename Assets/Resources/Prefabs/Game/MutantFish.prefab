@@ -32,10 +32,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5632461272070556493}
   - {fileID: 3064931722917232088}
   - {fileID: 1724314347151922325}
   - {fileID: 1371472325993054689}
-  - {fileID: 8512344141623721525}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8672628812075147139
@@ -160,7 +160,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
---- !u!1 &6223834593177806698
+--- !u!1 &4856479113693588878
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,8 +168,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8512344141623721525}
-  - component: {fileID: 6136887283293452864}
+  - component: {fileID: 5632461272070556493}
+  - component: {fileID: 4184567889751456642}
   m_Layer: 0
   m_Name: Pompa_0
   m_TagString: Untagged
@@ -177,28 +177,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8512344141623721525
+--- !u!4 &5632461272070556493
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6223834593177806698}
+  m_GameObject: {fileID: 4856479113693588878}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.05, y: -0.014490641, z: -0.08864314}
+  m_LocalPosition: {x: 0.049987793, y: -0.014465332, z: -0.08864315}
   m_LocalScale: {x: 2.3, y: 2.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4517638975966179279}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6136887283293452864
+--- !u!212 &4184567889751456642
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6223834593177806698}
+  m_GameObject: {fileID: 4856479113693588878}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
