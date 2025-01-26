@@ -58,7 +58,7 @@ public class SneakScript : MonoBehaviour
         float random = UnityEngine.Random.Range(-1f, 1f);
         Vector2 direction = new Vector2(random, 1.7f);
         fishscript.body.AddForce(direction * 3, ForceMode2D.Impulse);
-        fishscript.setStunned();
+        fishscript.SetStunned();
     }
 
     

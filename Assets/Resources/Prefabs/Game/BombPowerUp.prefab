@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 717046281836204806}
-  - component: {fileID: 9037620354555682906}
   - component: {fileID: 5975952042007110976}
   - component: {fileID: 9184502600846521520}
   m_Layer: 3
@@ -28,48 +27,12 @@ Transform:
   m_GameObject: {fileID: 1659510262221747439}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.00042984262, w: 0.99999994}
-  m_LocalPosition: {x: 0, y: 0.004304081, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8272950074260923878}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &9037620354555682906
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1659510262221747439}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
 --- !u!50 &5975952042007110976
 Rigidbody2D:
   serializedVersion: 5
@@ -110,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExplosionPower: 30
-  timer: 1
+  timer: 2
 --- !u!1 &2355515912629553911
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,11 +121,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1288555499750396718, guid: 6adf76c5f3eb1eb468601ab6fdc1462f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.4880517
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1288555499750396718, guid: 6adf76c5f3eb1eb468601ab6fdc1462f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25368986
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1288555499750396718, guid: 6adf76c5f3eb1eb468601ab6fdc1462f, type: 3}
       propertyPath: m_LocalPosition.z

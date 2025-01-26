@@ -84,14 +84,16 @@ public class FishScript : MonoBehaviour
     private bool splatPlayed = false;
     void Start()
     {
-        prefabBomba = Resources.Load<GameObject>("BombPowerUp");
+        prefabBomba = Resources.Load<GameObject>("Prefabs/Game/BombPowerUp");
+        prefabDobleSaltoAnimacion = Resources.Load<GameObject>("Prefabs/Game/SaltoDoble-Sheet_0");
+
         oxygenScript = oxygenController.GetComponent<OxygenScript>();
-        water = maxTimeWater;
-        oxygenScript.SetMaxOxygen(maxTimeWater);
-        body.gravityScale = 5.0f;
         bubbleScript = bubbleControler.GetComponent<BubbleScript>();
 
-        prefabDobleSaltoAnimacion = Resources.Load<GameObject>("SaltoDoble-Sheet_0");
+        water = maxTimeWater;
+        oxygenScript.SetMaxOxygen(maxTimeWater);
+
+        body.gravityScale = 5.0f;
     }
 
     private void FixedUpdate() {
@@ -238,7 +240,6 @@ public class FishScript : MonoBehaviour
                     body.linearVelocityX = 5.0f;
                 if (Input.GetKeyDown(keyIzquierda))
                     body.linearVelocityX = -5.0f;
-                
             }
         }
         else
@@ -288,7 +289,7 @@ public class FishScript : MonoBehaviour
         if (other.gameObject.CompareTag("PoisonSpill"))  // Make sure to set this tag on your poison prefab
         {
             Debug.Log("ESTOY ENVENENADO");
-            setPosion();
+            SetPoison();
         }
     }
     
@@ -356,13 +357,13 @@ public class FishScript : MonoBehaviour
         KeyDerecha = auxiliar;
         isReversed = false;
     }
-    public void setStunned()
+    public void SetStunned()
     {
         isStuned = true;
         stunTimer = 2.0f;
     }
 
-    public void setPosion()
+    public void SetPoison()
     {
         isPoisoned = true;
         poisonedTimer = 5f;
@@ -374,7 +375,7 @@ public class FishScript : MonoBehaviour
         water = maxTimeWater;
     }
 
-    public void setNumSaltos(int newnumSaltos)
+    public void SetNumSalots(int newnumSaltos)
     {
         numMaxSaltos = newnumSaltos;
     }
@@ -429,6 +430,7 @@ public class FishScript : MonoBehaviour
         // Destruir el objeto de la bomba
         Destroy(instanceWithTransform);
     }
+
     void AnimacionSalto2()
     {
         Vector3 posicion = body.transform.position;
