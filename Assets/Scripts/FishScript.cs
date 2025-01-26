@@ -9,6 +9,8 @@ public class FishScript : MonoBehaviour
     public GameObject bubbleControler;
     private BubbleScript bubbleScript;
 
+    private bool sueloSlowFalling = true;
+
     private bool slowFalling = true;
 
     private int numMaxSaltos = 2;
@@ -150,12 +152,13 @@ public class FishScript : MonoBehaviour
 
         if (body.IsTouching(ContactFilter))
         {
+            sueloSlowFalling = true;
             if (!splatPlayed)
             {
                 splat.Play();
                 splatPlayed = true;
             }
-            
+
             if (derecha && !izquierda)
             {
                 movimiento.x = 1.0f;
@@ -189,10 +192,10 @@ public class FishScript : MonoBehaviour
             if (Input.GetKey(KeySalto))
             {
                 if (isPoisoned)
-                Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge/2);
+                    Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge / 2);
                 else
-                Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
-                
+                    Charge = Mathf.Min(Charge + ChargeRate * Time.deltaTime, MaxCharge);
+
             }
             if (Input.GetKeyUp(KeySalto))
             {
@@ -202,17 +205,23 @@ public class FishScript : MonoBehaviour
                 JumpEffect();
             }
         }
-        else if (currentSaltos == 1 && currentSaltos < numMaxSaltos && Input.GetKeyDown(KeySalto))
+        else if (currentSaltos == 1 && currentSaltos < numMaxSaltos && Input.GetKeyDown(KeySalto) && bubbleScript.HasEnoughBubbles(1))
         {
             body.AddForce(movimiento * MaxCharge / 2, ForceMode2D.Impulse);
             currentSaltos = 0;
             JumpEffect();
+            bubbleScript.RemoveBubbles(1);
 
         }
-        else if (slowFalling)
+        else if (slowFalling && bubbleScript.HasEnoughBubbles(1))
         {
             if (Input.GetKey(KeyPlanear))
             {
+                if (sueloSlowFalling)
+                {
+                    bubbleScript.RemoveBubbles(1);
+                    sueloSlowFalling = false;
+                }
                 body.linearVelocityY = -3f;
                 if (Input.GetKeyDown(KeyDerecha))
                     body.linearVelocityX = 5.0f;
@@ -226,8 +235,9 @@ public class FishScript : MonoBehaviour
             splatPlayed = false;
         }
         
-        if (Input.GetKeyDown(KeyBomba))
+        if (Input.GetKeyDown(KeyBomba) && bubbleScript.HasEnoughBubbles(1))
         {
+            bubbleScript.RemoveBubbles(1);
             Vector3 posicion = body.transform.position;
             Quaternion rotation = Quaternion.identity;
             GameObject instanceWithTransform = Instantiate(prefabBomba, posicion, rotation);
