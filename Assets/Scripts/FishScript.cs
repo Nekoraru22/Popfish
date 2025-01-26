@@ -379,6 +379,7 @@ public class FishScript : MonoBehaviour
     {
         underWater = false;
         water = maxTimeWater;
+        SetNormalControls();
     }
 
     public void SetNumSalots(int newnumSaltos)
