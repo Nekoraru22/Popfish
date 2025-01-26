@@ -35,7 +35,7 @@ public class RefillerScript : MonoBehaviour
         // Verificamos si la colisión es con el objeto que queremos (MutantFish)
         if (collision.gameObject.name == "MutantFish")
         {
-            Debug.Log("Colisión detectada con MutantFish");
+            Debug.Log("Colisión salida con MutantFish");
 
             // Llama a la función `hit` cuando ocurre la colisión
             fishcontrollerscript.EndRefill();
