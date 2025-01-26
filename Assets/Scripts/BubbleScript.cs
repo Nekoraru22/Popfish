@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,14 +11,21 @@ public class BubbleScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        for (int i = 0; i < bubbles.Count(); i++)
+        {
+            bubbles[i].enabled = false;
+        }
         AddBubbles(-1);
     }
 
     // Add bubbles
     public void AddBubbles(int bubbles) {
         // Add all bubbles
+        Debug.Log(bubblesCount);
         if (bubbles == -1) {
+            Debug.Log(this.bubbles);
             for (int i = 0; i < bubblesCount; i++) {
+                Debug.Log(this.bubbles[i]);
                 this.bubbles[i].enabled = true;
             }
         }
