@@ -352,10 +352,14 @@ public class FishScript : MonoBehaviour
 
     public void SetNormalControls()
     {
-        KeyCode auxiliar = keyIzquierda;
-        keyIzquierda = KeyDerecha;
-        KeyDerecha = auxiliar;
-        isReversed = false;
+        if (isReversed)
+        {
+            Debug.Log("Entro");
+            KeyCode auxiliar = keyIzquierda;
+            keyIzquierda = KeyDerecha;
+            KeyDerecha = auxiliar;
+            isReversed = false;
+        }
     }
     public void SetStunned()
     {
@@ -373,7 +377,6 @@ public class FishScript : MonoBehaviour
     {
         underWater = false;
         water = maxTimeWater;
-        SetNormalControls();
     }
 
     public void SetNumSalots(int newnumSaltos)

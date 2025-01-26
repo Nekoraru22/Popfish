@@ -11,8 +11,8 @@ public class FishControllerScript : MonoBehaviour
     private void Start()
     {
 
+    fishScript = fish.GetComponent<FishScript>();
     }
-    //fish = GameObject.Find("fish").GetComponent<FishScript>();
 
     public void SetStun() {
         // Rebotar e inmovilizar al pez durante 2 segundos
@@ -57,7 +57,10 @@ public class FishControllerScript : MonoBehaviour
     {
 
     }
-
+    public void RefillBubbles(int buble) 
+    {
+        fishScript.RefillBubbles(buble);
+    }
     public void EnableDobleJump()
     {
         fishScript.SetNumSalots(2);
