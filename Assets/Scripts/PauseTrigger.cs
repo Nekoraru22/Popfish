@@ -37,4 +37,19 @@ public class PauseTrigger : MonoBehaviour
         // Optionally, you can pause/unpause the game
         Time.timeScale = isPaused ? 0f : 1f;
     }
+
+    public void ContinueGame() {
+        pauseMenuCanvas.gameObject.SetActive(false);
+        isPaused = false;
+    }
+
+    public void ExitGame() {
+        #if UNITY_EDITOR
+                // Application.Quit() does not work in the editor so
+                // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                        Application.Quit();
+        #endif
+    }
 }
