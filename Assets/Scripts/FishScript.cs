@@ -81,6 +81,9 @@ public class FishScript : MonoBehaviour
     private float startRotation;
     private float targetRotation;
 
+    public GameObject statesEffectsController;
+    private StateEffectsScript statesEffectsScripts;
+
     private bool splatPlayed = false;
     void Start()
     {
@@ -89,6 +92,7 @@ public class FishScript : MonoBehaviour
 
         oxygenScript = oxygenController.GetComponent<OxygenScript>();
         bubbleScript = bubbleControler.GetComponent<BubbleScript>();
+        statesEffectsScripts = statesEffectsController.GetComponent<StateEffectsScript>();
 
         water = maxTimeWater;
         oxygenScript.SetMaxOxygen(maxTimeWater);
@@ -101,6 +105,7 @@ public class FishScript : MonoBehaviour
             poisonedTimer -= Time.deltaTime;
             if (poisonedTimer < 0.0f) {
                 isPoisoned = false;
+                statesEffectsScripts.disableDebuff();
             }
         }
         underWater = false;
@@ -367,6 +372,7 @@ public class FishScript : MonoBehaviour
     {
         isPoisoned = true;
         poisonedTimer = 5f;
+        statesEffectsScripts.enableDebuff();
     }
 
     public void SetWater()
